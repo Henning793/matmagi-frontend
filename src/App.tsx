@@ -10,20 +10,21 @@ interface Recipe {
 
 export const App = () => {
     const [recipes, setRecipes] = useState<Recipe[]>([])
+
+    const getRecipes = async () => {
+        const url = `${apiUrl}/recipe`
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        const jsonData = await response.json()
+        setRecipes(jsonData)
+    }
     
     useEffect(() => {
-        const getRecipes = async () => {
-            const url = `${apiUrl}/recipe`
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-
-            const jsonData = await response.json()
-            setRecipes(jsonData)
-        }
         getRecipes()
     }, [])
 
