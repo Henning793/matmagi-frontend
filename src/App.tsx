@@ -1,9 +1,32 @@
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
+import { apiUrl } from './api/urlConfig'
+
+interface Recipe {
+    id: number
+    name: string
+}
 
 export const App = () => {
-    const [recipes, setRecipes] = useState([{id: 1, name: "korean fired chicken"}, {id: 2, name: "hot temper"}])
+    const [recipes, setRecipes] = useState<Recipe[]>([])
+    
+    useEffect(() => {
+        const getRecipes = async () => {
+            const url = `${apiUrl}/recipe`
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            const jsonData = await response.json()
+            setRecipes(jsonData)
+        }
+        getRecipes()
+    }, [])
+
     return (
         <>
             {recipes.map(recipe => {
