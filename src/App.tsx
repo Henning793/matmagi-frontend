@@ -30,7 +30,8 @@ export const App = () => {
 
     return (
         <>
-        <h1>Oppskrifter</h1>
+        <h1>Matmagi</h1>
+        <h2>Oppskrifter</h2>
             {recipes.map(recipe => {
                 return (
                     <div key={recipe.id}>
